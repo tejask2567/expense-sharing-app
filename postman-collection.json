@@ -1,0 +1,304 @@
+{
+  "info": {
+    "name": "Expense Sharing API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/register",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "email": "john@example.com",
+                "name": "John Doe",
+                "mobile": "1234567890",
+                "password": "SecurePass123!"
+              }
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/login",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "email": "john@example.com",
+                "password": "SecurePass123!"
+              }
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/logout",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Get User Details",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/user",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Update User Details",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/user",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "name": "John Updated",
+                "mobile": "9876543210"
+              }
+            }
+          }
+        },
+        {
+          "name": "Search Users",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/users/search?q=john",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Get Recent Contacts",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/users/recent-contacts",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/user/change-password",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "current_password": "SecurePass123!",
+                "new_password": "NewSecurePass123!"
+              }
+            }
+          }
+        },
+        {
+          "name": "Get User Balance",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/user/balance",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Expenses",
+      "item": [
+        {
+          "name": "Add Expense (Equal Split)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/expense",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "description": "Dinner",
+                "amount": 3000,
+                "split_type": "equal",
+                "participants": [
+                  {"user_id": 1},
+                  {"user_id": 2},
+                  {"user_id": 3}
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "Add Expense (Exact Split)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/expense",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "description": "Shopping",
+                "amount": 4299,
+                "split_type": "exact",
+                "participants": [
+                  {"user_id": 1, "share_amount": 1500},
+                  {"user_id": 2, "share_amount": 799},
+                  {"user_id": 3, "share_amount": 2000}
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "Add Expense (Percentage Split)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/expense",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "description": "Party",
+                "amount": 10000,
+                "split_type": "percentage",
+                "participants": [
+                  {"user_id": 1, "share_percentage": 50},
+                  {"user_id": 2, "share_percentage": 25},
+                  {"user_id": 3, "share_percentage": 25}
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "Get User Expenses",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/expenses/user",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Download Balance Sheet",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/balance-sheet/download",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "jwt_token",
+      "value": "your_jwt_token_here"
+    }
+  ]
+}

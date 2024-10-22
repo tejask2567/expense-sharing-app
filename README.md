@@ -22,6 +22,7 @@ A Flask-based web application for managing and splitting expenses among users. T
 - Python 3.8 or higher
 - pip (Python package installer)
 - SQLite3
+- Postman (for API testing)
 
 ## Installation
 
@@ -64,6 +65,77 @@ python run.py
 ```
 
 The application will start and be available at `http://localhost:5000`
+
+## API Testing with Postman
+
+A complete Postman collection is included in the repository as `postman-collection.json`. This collection includes all API endpoints with example requests and required headers.
+
+### Setting up Postman Collection
+
+1. Open Postman
+2. Click on "Import" button
+3. Drag and drop the `postman-collection.json` file or browse and select it
+4. The collection "Expense Sharing API" will be imported with all requests
+
+### Collection Variables
+
+The collection uses two variables that you need to configure:
+- `base_url`: Default set to `http://localhost:5000`
+- `jwt_token`: You need to update this after login with the received token
+
+### Using the Collection
+
+1. Start with Authentication endpoints:
+   - Use "Register User" to create a new account
+   - Use "Login" to get your JWT token
+   - Copy the received token and update the `jwt_token` variable in your Postman environment
+
+2. The collection is organized into three folders:
+   - Authentication
+   - User Management
+   - Expenses
+
+3. Example requests included:
+   - Equal split expense
+   - Exact amount split expense
+   - Percentage split expense
+   - User search
+   - Balance sheet download
+   - And more...
+
+4. All authenticated endpoints automatically include the JWT token in the Authorization header
+
+### Request Examples
+
+#### Creating an Equal Split Expense
+```json
+POST /expense
+{
+    "description": "Dinner",
+    "amount": 3000,
+    "split_type": "equal",
+    "participants": [
+        {"user_id": 1},
+        {"user_id": 2},
+        {"user_id": 3}
+    ]
+}
+```
+
+#### Creating a Percentage Split Expense
+```json
+POST /expense
+{
+    "description": "Party",
+    "amount": 10000,
+    "split_type": "percentage",
+    "participants": [
+        {"user_id": 1, "share_percentage": 50},
+        {"user_id": 2, "share_percentage": 25},
+        {"user_id": 3, "share_percentage": 25}
+    ]
+}
+```
 
 ## API Endpoints
 
